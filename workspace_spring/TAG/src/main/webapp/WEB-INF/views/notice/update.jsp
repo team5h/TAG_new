@@ -1,4 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ include file="../header.jsp" %>
+<%@ include file="ssi.jsp" %>
 
 <script>
 	function notice_updateProc(){
@@ -37,7 +39,9 @@
 </tr>
 <tr>
 	<th class="info">내용</th>
-	<td><input type="text" name="edit" value="${notice.edit}"></td>
+	<td> 
+		<textarea id="summernote" name="edit"> ${notice.edit} </textarea> 
+	</td>
 </tr>
 <tr>
 	<td>
@@ -50,3 +54,28 @@
 </form>
 </div>
 <!-- 본문영역 -->
+
+<script>
+     // summernote
+      $('#summernote').summernote({
+        //placeholder: 'Hello Bootstrap 4',
+        tabsize: 2,
+        height: 500,
+        focus: true,
+        toolbar: [
+          // [groupName, [list of button]]
+          ['fontname', ['fontname']],
+          ['fontsize', ['fontsize']],
+          ['style', ['bold', 'italic', 'underline','strikethrough', 'clear']],
+          ['color', ['forecolor','color']],
+          ['table', ['table']],
+          ['para', ['ul', 'ol', 'paragraph']],
+          ['height', ['height']],
+          ['view',['codeview']]
+        ],
+      fontNames: ['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New','맑은 고딕','궁서','굴림체','굴림','돋움체','바탕체'],
+      fontSizes: ['8','9','10','11','12','14','16','18','20','22','24','28','30','36','50','72'],
+      lang: "ko-KR",
+      disableDragAndDrop:true
+   });//end
+ </script>

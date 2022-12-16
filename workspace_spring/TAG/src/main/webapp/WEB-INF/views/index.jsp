@@ -136,6 +136,56 @@
 						</a>
 	
 						<!-- 프로필 -->
+						<c:choose>
+							<c:when test="${mem_grade == 'B'}">		<!-- 일반 회원 -->
+								<a href="/mypage/mypageG" class="user-profile">
+									<svg width="23" height="23" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+									<g clip-path="url(#clip0_429_9074)">
+									<path d="M3.99988 18C3.99988 15.7908 5.79074 14 7.99988 14H15.9999C18.209 14 19.9999 15.7908 19.9999 18V18C19.9999 19.1045 19.1044 20 17.9999 20H5.99988C4.89531 20 3.99988 19.1045 3.99988 18V18Z" stroke="#292929" stroke-width="1.5" stroke-linejoin="round"/>
+									<circle cx="11.9999" cy="6.99997" r="3" stroke="#292929" stroke-width="1.5"/>
+									</g>
+									<defs>
+									<clipPath id="clip0_429_9074">
+									<rect width="24" height="24" fill="white"/>
+									</clipPath>
+									</defs>
+									</svg>
+								</a>
+							</c:when>
+							
+							<c:when test="${mem_grade == 'S'}">		<!-- 판매자 회원 -->
+								<a href="/mypageS" class="user-profile">
+									<svg width="23" height="23" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+									<g clip-path="url(#clip0_429_9074)">
+									<path d="M3.99988 18C3.99988 15.7908 5.79074 14 7.99988 14H15.9999C18.209 14 19.9999 15.7908 19.9999 18V18C19.9999 19.1045 19.1044 20 17.9999 20H5.99988C4.89531 20 3.99988 19.1045 3.99988 18V18Z" stroke="#292929" stroke-width="1.5" stroke-linejoin="round"/>
+									<circle cx="11.9999" cy="6.99997" r="3" stroke="#292929" stroke-width="1.5"/>
+									</g>
+									<defs>
+									<clipPath id="clip0_429_9074">
+									<rect width="24" height="24" fill="white"/>
+									</clipPath>
+									</defs>
+									</svg>
+								</a>
+							</c:when>
+							
+							<c:when test="${mem_grade == null}">	<!-- 로그인으로 이동 -->
+								<a href="/loginForm" class="user-profile">
+									<svg width="23" height="23" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+									<g clip-path="url(#clip0_429_9074)">
+									<path d="M3.99988 18C3.99988 15.7908 5.79074 14 7.99988 14H15.9999C18.209 14 19.9999 15.7908 19.9999 18V18C19.9999 19.1045 19.1044 20 17.9999 20H5.99988C4.89531 20 3.99988 19.1045 3.99988 18V18Z" stroke="#292929" stroke-width="1.5" stroke-linejoin="round"/>
+									<circle cx="11.9999" cy="6.99997" r="3" stroke="#292929" stroke-width="1.5"/>
+									</g>
+									<defs>
+									<clipPath id="clip0_429_9074">
+									<rect width="24" height="24" fill="white"/>
+									</clipPath>
+									</defs>
+									</svg>
+								</a>
+							</c:when>
+						</c:choose>
+
 						<a href="#" class="user-profile">
 							<svg width="23" height="23" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 							<g clip-path="url(#clip0_429_9074)">
@@ -149,8 +199,7 @@
 							</defs>
 							</svg>
 						</a>
-						
-						
+
 						
 						<!-- 좋아요 하트 -->
 						<a href="cart.html" class="like">

@@ -9,41 +9,42 @@
 
 
 <br>
-	<h1 class="saem_title"> MY PAGE </h1>
+	<h1 class="saem_title"> <a href="/mypageS" style="color:black" class="saem_title"> MY PAGE </a> </h1>
 <br> 
 
-<div>
-							<!-- position:sticky;  -->
-<div class="leftcontent" style="float:left; width:15%; margin-right:5%; height:100%;">
-	[회원id]님 <!-- 세션아이디 -->
-<br><br>
-	
-		<ul style="font-size:13px; list-style-type: none; padding-left:0px;">
-	
-		<li style="font-weight:bold;">회원정보수정</li>
-<br>
-		<li style="font-weight:bold; color:#cdf336;"> PRODUCT </li>
-			<li>&nbsp;<a href="/mypageS/create" style="color:black;" class="saem_a">  - 상품등록  &nbsp;</a></li>
-			<li>&nbsp;<a href="/mypageS/productM" style="color:black;" class="saem_a">  - 상품관리  &nbsp;</a></li>
-<br>	
-		<li style="font-weight:bold;"> ORDER </li>
-			<li>&nbsp;<a href="/mypageS/orderM" style="color:black; "class="saem_a"> - 주문관리 &nbsp;</a></li>	
-<br>	
-		<li style="font-weight:bold;"> QnA </li>
-			<li>&nbsp; - 답변대기 &nbsp;</li>
-			<li>&nbsp; - 답변완료 &nbsp;</li>
-<br>	
-		<li style="font-weight:bold;"> 판매통계 </li>	
-	</ul>
-	
+<div class="float" style="width: 100%; height: 100%; flex: 1;">
+						
+<div class="leftcontent" style="float:left; width:15%; margin-right:5%;">
+	<div class="stickyP" style="height: 100%;">
+			<p style="font-size: 20px; font-weight: 500;" class="fontG">
+				${s_p_id}&nbsp;님 <!-- 세션아이디 -->
+			</p>
+	<br>	
+		<div class="stickyC" style="position: sticky; top: 100px; padding-bottom: 100px;">	
+			<ul style="font-size:13px; list-style-type: none; padding-left:0px;">
+				<li class="side_liT" style="color:lightgreen;"> PRODUCT </li>
+					<li>&nbsp;<a href="/mypageS/create" style="color:black; font-size: 12px;" class="fontS">  - 상품등록 &nbsp;</a></li>
+					<li>&nbsp;<a href="/mypageS/productM" style="color:black; font-size: 12px;" class="fontS">  - 상품관리 &nbsp;</a></li>
+		<br>	
+				<li class="side_liT"> ORDER </li>
+					<li>&nbsp;<a href="/mypageS/orderM" style="color:black; font-size: 12px;" class="fontS"> - 주문관리 &nbsp;</a></li>	
+		<br>	
+				<li class="side_liT"> QnA </li>
+					<li>&nbsp;<a href="/mypageS/qna" style="color:black; font-size: 12px;" class="fontS"> - 답변대기 &nbsp;</a></li>
+					<li>&nbsp;<a href="/mypageS/answer" style="color:black; font-size: 12px;" class="fontS"> - 답변완료 &nbsp;</a></li>
+		<br>			
+				<li style="font-size: 12px; font-weight: 400; color: #bcbcbc;" class="fontS"> <a> 회원정보수정 </a> </li>
+			</ul>
+		</div><!-- stickyC -->
+	 </div><!-- stickyP -->
 </div><!-- "leftcontent" -->
 
 
 
-<div class="rightcontent" style="float:right; width:80%; height:100%;"> 
+<div class="rightcontent" style="float:right; width:80%;"> 
 	<form method="post" action="/mypageS/productProc" name="productForm" onsubmit="return productCheck()" enctype="multipart/form-data">
 	
-		<input type="hidden" name="p_id" value="privatecurve"><!-- 세션아이디 -->
+		<input type="hidden" name="p_id" value="${s_p_id}"><!-- 세션아이디 -->
 
 		<select name="c_no" id="c_no" style="width:100%;">
 			<option selected value="-">해당 공연을 선택해주세요.</option>
@@ -137,7 +138,8 @@
 		
 	</form>
 </div><!-- rightcontent -->
-</div>
+
+</div><!-- float -->
 
 <!-- 본문영역 -->
 

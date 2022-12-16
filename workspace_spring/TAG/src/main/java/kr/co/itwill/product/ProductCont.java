@@ -179,6 +179,30 @@ public class ProductCont {
 
 	
 
+//  [상품리스트 - 음반 카테고리] 시작  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  //
+    
+	@RequestMapping("/music")
+    public ModelAndView music(String category) {
+		
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("product/list");
+		
+		System.out.println(category);
+   
+	    return mav;
+	}//search() end	
+	
+
+	@RequestMapping("/product")
+	//@RequestMapping("/product/{pro_no}")
+	public ModelAndView productdetail() {
+		ModelAndView mav = new ModelAndView();
+		
+		mav.setViewName("/product/detail");
+		
+		return mav;
+	}// end
+
 	
 	
 }//class end
