@@ -6,6 +6,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
@@ -14,11 +15,13 @@ import java.util.UUID;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -27,10 +30,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.fasterxml.jackson.annotation.JsonCreator.Mode;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.JsonObject;
 
+import kr.co.itwill.productOrder.ProdcutOrderDTO;
 import net.utility.UploadSaveManager;
 
 import org.springframework.context.annotation.Configuration;
@@ -119,7 +124,7 @@ public class SellerProductCont {
 		ModelAndView mav = new ModelAndView();
 		
 		
-//------------------------------------------------------------------------- 첨부 파일 저장
+		//----------------------------------------------------- 첨부 파일 저장
 		
 		String basePath = req.getRealPath("/storage"); 	
 		
@@ -127,7 +132,7 @@ public class SellerProductCont {
 		MultipartFile fileimg = dto.getFileimg();
 
 		String postername = UploadSaveManager.saveFileSpring30(fileimg, basePath);
-		dto.setpostername(postername);
+		dto.setPostername(postername);
 		
 		int cnt = sellerproductdao.productInsert(dto); 
 
@@ -142,15 +147,57 @@ public class SellerProductCont {
 		return mav; 
 	}//productProc() end
 	
+	
 	@RequestMapping("/mypageS/productM")
-	public ModelAndView productM() {
+	public ModelAndView productM(HttpSession session, HttpServletRequest req) {
 		ModelAndView mav = new ModelAndView();
 		
 		mav.setViewName("/memberSeller/productM");
-		mav.addObject("productlist", sellerproductdao.productlist());
 		
+		String p_id = (String) session.getAttribute("s_p_id");
+		// p_id = "privatecurve";
+		int totalRowCount = sellerproductdao.totpro_cnt(p_id); // 총 개수
+		
+		//페이징설정 
+		int numPerPage = 7;
+		int pagePerBlock = 10;
+		
+		String pageNum = req.getParameter("pageNum");	// 현재 페이지값 받아오기
+		if (pageNum == null) {
+			pageNum = "1";
+		}//if end
+		
+		int currentPage = Integer.parseInt(pageNum);			// 현재 페이지
+		int startRow 	= (currentPage-1) * numPerPage + 1;		// 한 페이지 글 목록에서 시작하는 행
+		int endRow		= currentPage * numPerPage; 			// 한 페이지 글 목록에서 끝나는 행
+		
+		// 페이지 수 
+		double totcnt = (double)totalRowCount/numPerPage;		// 전체 페이지 수 (전체글개수 / 5개)
+		int totalPage = (int)Math.ceil(totcnt);					// Math.ceil : 소수점 올림
+		
+		double d_page = (double)currentPage/pagePerBlock;		// 현재 페이지 넘버 / 전체 페이지 수
+		int Pages = (int)Math.ceil(d_page) -1;					// 페이지 목록을 하나로 묶음? (1-10 목록은 1, 11-20 목록은 2)
+		int startPage = Pages*pagePerBlock +1;					// 페이지 목록(ex 1~10번페이지 / 11~20번 페이지)에서 시작하는 페이지 넘버 (10개씩이면 1,11,21···.)
+		int endPage = startPage + pagePerBlock -1;			    // 페이지 목록에서 마지막 페이지 넘버 (10개씩이면 10,20,30···.)
+		
+		List list = null;
+        if (totalRowCount > 0) {
+        	list = sellerproductdao.productlist(startRow, endRow, p_id);
+        } else {
+            list = Collections.emptyList(); // 안 넣어도 상관 없음
+        } // if end
+        
+        mav.addObject("total", totalRowCount);
+        mav.addObject("productlist",list);
+        mav.addObject("pageNum", currentPage);
+
+        mav.addObject("count", totalRowCount);
+        mav.addObject("totalPage", totalPage);
+        mav.addObject("startPage", startPage);
+        mav.addObject("endPage", endPage);
+        
 		return mav; 
-	}
+	}// end
 
 	
 	@ResponseBody
@@ -193,32 +240,32 @@ public class SellerProductCont {
 		String basePath = req.getRealPath("/storage");
 		SellerProductDTO oldDTO = sellerproductdao.productread(dto.getPro_no());	
 		
-//------------------------------------------------------------------------------------ 파일을 수정할것인가?
+		//----------------------------------------------------- 파일을 수정할것인가?
 		
 		// ①. 
 		MultipartFile fileimg = dto.getFileimg();
 		if (fileimg.getSize() > 0) {
 		// = 포스터의 파일 크기가 0이상이면 = 새로운 파일이 첨부되었다면 
 			
-			UploadSaveManager.deleteFile(basePath, oldDTO.getpostername());	// 기존 파일 삭제
+			UploadSaveManager.deleteFile(basePath, oldDTO.getPostername());	// 기존 파일 삭제
 			String postername = UploadSaveManager.saveFileSpring30(fileimg, basePath);	// 새로 첨부된 파일 저장
-			dto.setpostername(postername);	//새로 첨부된 파일명 dto에 저장
+			dto.setPostername(postername);	//새로 첨부된 파일명 dto에 저장
 		
 		}else {
 		// 포스터를 수정하지 않았다면 = 새로운 파일이 첨부되지 않았다면 
 			
-			dto.setpostername(oldDTO.getpostername()); 		// 기존 파일명 그대로 저장
+			dto.setPostername(oldDTO.getPostername()); 		// 기존 파일명 그대로 저장
 		
 		}//if end
 		
-//------------------------------------------------------------------------------------ 파일을 수정할것인가?
+		//----------------------------------------------------- 파일을 수정할것인가?
 		
 		ModelAndView mav = new ModelAndView();
 		
 		int cnt = sellerproductdao.productupdate(dto);
 		
 		if (cnt == 0) {
-			mav.setViewName("/ErrorView");
+			mav.setViewName("/memberSeller/ErrorView");
 		}else {
 			mav.setViewName("redirect:/mypageS/productM");
 		}//if end
@@ -247,25 +294,193 @@ public class SellerProductCont {
 	}//end 
 
 	@RequestMapping ("/mypageS/orderM") 
-	public ModelAndView orderM() {
+	public ModelAndView orderM(HttpSession session, HttpServletRequest req) {
 		ModelAndView mav = new ModelAndView();
 		
-		String p_id = "privatecurve"; 	// 세션아이디! 
+		String p_id = (String) session.getAttribute("s_p_id");
 		
 		mav.setViewName("/memberSeller/orderM");
-		mav.addObject("orderlist",sellerproductdao.orderlist(p_id));
-	
+		
+		//페이징
+		int totalRowCount = sellerproductdao.totord_cnt(p_id); // 총 개수
+		
+		//페이징설정 
+		int numPerPage = 10;
+		int pagePerBlock = 10;
+		
+		String pageNum = req.getParameter("pageNum");	// 현재 페이지값 받아오기
+		if (pageNum == null) {
+			pageNum = "1";
+		}//if end
+		
+		int currentPage = Integer.parseInt(pageNum);			// 현재 페이지
+		int startRow 	= (currentPage-1) * numPerPage + 1;		// 한 페이지 글 목록에서 시작하는 행
+		int endRow		= currentPage * numPerPage; 			// 한 페이지 글 목록에서 끝나는 행
+		
+		// 페이지 수 
+		double totcnt = (double)totalRowCount/numPerPage;		// 전체 페이지 수 (전체글개수 / 5개)
+		int totalPage = (int)Math.ceil(totcnt);					// Math.ceil : 소수점 올림
+		
+		double d_page = (double)currentPage/pagePerBlock;		// 현재 페이지 넘버 / 전체 페이지 수
+		int Pages = (int)Math.ceil(d_page) -1;					// 페이지 목록을 하나로 묶음? (1-10 목록은 1, 11-20 목록은 2)
+		int startPage = Pages*pagePerBlock +1;					// 페이지 목록(ex 1~10번페이지 / 11~20번 페이지)에서 시작하는 페이지 넘버 (10개씩이면 1,11,21···.)
+		int endPage = startPage + pagePerBlock -1;			    // 페이지 목록에서 마지막 페이지 넘버 (10개씩이면 10,20,30···.)
+		
+		List list = null;
+        if (totalRowCount > 0) {
+        	list = sellerproductdao.orderlist(startRow, endRow, p_id);
+        } else {
+            list = Collections.emptyList(); // 안 넣어도 상관 없음
+        } // if end
+        
+		//mav.addObject("productlist", sellerproductdao.productlist());
+        mav.addObject("total", totalRowCount);
+        mav.addObject("orderlist",list);
+        mav.addObject("pageNum", currentPage);
+
+        mav.addObject("count", totalRowCount);
+        mav.addObject("totalPage", totalPage);
+        mav.addObject("startPage", startPage);
+        mav.addObject("endPage", endPage);
+        
+		
 		return mav;
-	}
+	}//end
 	
-	@RequestMapping("/mypageS/orderMdetail")
-	public ModelAndView orderMdetail() {
+	@RequestMapping("/mypageS/orderMdetail/{order_num}")
+	public ModelAndView orderMdetail(@PathVariable String order_num, HttpSession session) {
 		ModelAndView mav = new ModelAndView();
 		
 		mav.setViewName("/memberSeller/orderMdetail");
 		
+		String p_id = (String) session.getAttribute("s_p_id");
+
+		mav.addObject("orderdetailList",sellerproductdao.orderdetailList(order_num,p_id));
+		mav.addObject("orderdetail",sellerproductdao.orderdetail(order_num,p_id));
 		return mav;
+	}//end
+	
+	@RequestMapping(value = "/mypageS/orderstus/{order_num}", method = RequestMethod.POST)
+	public String orderstus(@RequestParam Map<String, Object> map) {
+
+		sellerproductdao.orderstusupdate(map);
+			
+		return "redirect:/mypageS/orderMdetail/{order_num}";
+	}//end
+	
+	@RequestMapping(value = "/mypageS/orderdetailProc/{order_num}", method = RequestMethod.POST)
+	public String orderdetailProc (@ModelAttribute ProdcutOrderDTO dto) {
+
+		sellerproductdao.orderdetailupdate(dto);
+		
+		return "redirect:/mypageS/orderMdetail/{order_num}";
 	}
+	
+	@RequestMapping(value = "/mypageS/productsearch", method = RequestMethod.POST)
+	public ModelAndView S_proSearch(HttpServletRequest req, HttpSession session
+								   ,@RequestParam(defaultValue = "") String pro_name) {
+		ModelAndView mav = new ModelAndView();
+		
+
+		mav.setViewName("/memberSeller/productM");
+		
+		String p_id = (String) session.getAttribute("s_p_id");
+
+		//페이징
+		int totalRowCount = sellerproductdao.totpro_cnt(p_id); // 총 개수
+		int numPerPage = 7;
+		int pagePerBlock = 10;
+		
+		String pageNum = req.getParameter("pageNum");	// 현재 페이지값 받아오기
+		if (pageNum == null) {
+			pageNum = "1";
+		}//if end
+		
+		int currentPage = Integer.parseInt(pageNum);			// 현재 페이지
+		int startRow 	= (currentPage-1) * numPerPage + 1;		// 한 페이지 글 목록에서 시작하는 행
+		int endRow		= currentPage * numPerPage; 			// 한 페이지 글 목록에서 끝나는 행
+		
+		// 페이지 수 
+		double totcnt = (double)totalRowCount/numPerPage;		// 전체 페이지 수 (전체글개수 / 5개)
+		int totalPage = (int)Math.ceil(totcnt);					// Math.ceil : 소수점 올림
+		
+		double d_page = (double)currentPage/pagePerBlock;		// 현재 페이지 넘버 / 전체 페이지 수
+		int Pages = (int)Math.ceil(d_page) -1;					// 페이지 목록을 하나로 묶음? (1-10 목록은 1, 11-20 목록은 2)
+		int startPage = Pages*pagePerBlock +1;					// 페이지 목록(ex 1~10번페이지 / 11~20번 페이지)에서 시작하는 페이지 넘버 (10개씩이면 1,11,21···.)
+		int endPage = startPage + pagePerBlock -1;			    // 페이지 목록에서 마지막 페이지 넘버 (10개씩이면 10,20,30···.)
+		
+		List list = null;
+        if (totalRowCount > 0) {
+        	list = sellerproductdao.S_proSearch(startRow, endRow, p_id, pro_name);
+        } else {
+            list = Collections.emptyList(); // 안 넣어도 상관 없음
+        } // if end
+        
+        mav.addObject("total", totalRowCount);
+        mav.addObject("productlist",list);
+        mav.addObject("pageNum", currentPage);
+
+        mav.addObject("count", totalRowCount);
+        mav.addObject("totalPage", totalPage);
+        mav.addObject("startPage", startPage);
+        mav.addObject("endPage", endPage);
+		
+		return mav;
+	}//end
+	
+	@RequestMapping(value = "/mypageS/ordersearch" )
+	public ModelAndView S_ordSearch (HttpServletRequest req, HttpSession session
+									,@RequestParam(defaultValue = "") String order_num) {
+		
+		ModelAndView mav = new ModelAndView();
+		
+		String p_id = (String) session.getAttribute("s_p_id");
+		
+		mav.setViewName("/memberSeller/orderM");
+		
+		//페이징
+		int totalRowCount = sellerproductdao.totord_cnt(p_id); // 총 개수
+		
+		//페이징설정 
+		int numPerPage = 10;
+		int pagePerBlock = 10;
+		
+		String pageNum = req.getParameter("pageNum");	// 현재 페이지값 받아오기
+		if (pageNum == null) {
+			pageNum = "1";
+		}//if end
+		
+		int currentPage = Integer.parseInt(pageNum);			// 현재 페이지
+		int startRow 	= (currentPage-1) * numPerPage + 1;		// 한 페이지 글 목록에서 시작하는 행
+		int endRow		= currentPage * numPerPage; 			// 한 페이지 글 목록에서 끝나는 행
+		
+		// 페이지 수 
+		double totcnt = (double)totalRowCount/numPerPage;		// 전체 페이지 수 (전체글개수 / 5개)
+		int totalPage = (int)Math.ceil(totcnt);					// Math.ceil : 소수점 올림
+		
+		double d_page = (double)currentPage/pagePerBlock;		// 현재 페이지 넘버 / 전체 페이지 수
+		int Pages = (int)Math.ceil(d_page) -1;					// 페이지 목록을 하나로 묶음? (1-10 목록은 1, 11-20 목록은 2)
+		int startPage = Pages*pagePerBlock +1;					// 페이지 목록(ex 1~10번페이지 / 11~20번 페이지)에서 시작하는 페이지 넘버 (10개씩이면 1,11,21···.)
+		int endPage = startPage + pagePerBlock -1;			    // 페이지 목록에서 마지막 페이지 넘버 (10개씩이면 10,20,30···.)
+		
+		List list = null;
+        if (totalRowCount > 0) {
+        	list = sellerproductdao.S_ordSearch(startRow, endRow, p_id, order_num);
+        } else {
+            list = Collections.emptyList(); // 안 넣어도 상관 없음
+        } // if end
+        
+        mav.addObject("total", totalRowCount);
+        mav.addObject("orderlist",list);
+        mav.addObject("pageNum", currentPage);
+
+        mav.addObject("count", totalRowCount);
+        mav.addObject("totalPage", totalPage);
+        mav.addObject("startPage", startPage);
+        mav.addObject("endPage", endPage);
+        
+		return mav;
+	}//end
 	
 	
 }//Cont end

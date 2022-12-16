@@ -18,20 +18,20 @@ public class SellerProductDTO {
     private int	   price;    
     private String regdate;   
     private String edit;
-    private String status; 		// 판매상태(칼럼o)
-    private String postername;	// 대표이미지 이름저장용
-    private int    likecnt;		// 좋아요카운트   
+    private String status; 			// 판매상태(칼럼o)
+    private String postername;		// 대표이미지 이름저장용
+    private int    likecnt;			// 좋아요카운트   
     
     private int afstock;			// 현재 재고수량(칼럼x)
     private int sales;				// 판매수량
     private List chkList; 			// 선택 삭제 배열 
     private MultipartFile fileimg; 	// 실제 이미지파일 저장용
-   
+
     //Default Constructor	
     public SellerProductDTO() {}
 
-
-    //getter·setter
+    
+    //getter·setter	
 	public int getPro_no() {
 		return pro_no;
 	}
@@ -128,11 +128,11 @@ public class SellerProductDTO {
 		this.status = status;
 	}
 
-	public String getpostername() {
+	public String getPostername() {
 		return postername;
 	}
 
-	public void setpostername(String postername) {
+	public void setPostername(String postername) {
 		this.postername = postername;
 	}
 
@@ -176,18 +176,21 @@ public class SellerProductDTO {
 		this.fileimg = fileimg;
 	}
 
-	
+
 	//toString()
 	@Override
 	public String toString() {
 		return "SellerProductDTO [pro_no=" + pro_no + ", category=" + category + ", c_no=" + c_no + ", p_id=" + p_id
 				+ ", pro_name=" + pro_name + ", stock=" + stock + ", color=" + color + ", size=" + size + ", price="
-				+ price + ", regdate=" + regdate + ", edit=" + edit + ", status=" + status + ", postername=" + postername
-				+ ", likecnt=" + likecnt + ", afstock=" + afstock + ", sales=" + sales + ", chkList=" + chkList
-				+ ", fileimg=" + fileimg + "]";
-	} 
-	
-   
+				+ price + ", regdate=" + regdate + ", edit=" + edit + ", status=" + status + ", postername="
+				+ postername + ", likecnt=" + likecnt + ", afstock=" + afstock + ", sales=" + sales + ", chkList="
+				+ chkList + ", fileimg=" + fileimg + "]";
+	}
+
+
+
+
+
 	
    
    

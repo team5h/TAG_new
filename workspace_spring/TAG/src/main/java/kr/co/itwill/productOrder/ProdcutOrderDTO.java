@@ -14,8 +14,7 @@ public class ProdcutOrderDTO {
     private String rec_name;               
     private String rec_addr;                     
     private String rec_tel;                           
-    private String msg;                                      
-    private String stus;                              
+    private String msg;                               
 		    
     private int total_cnt;
     private String order_date;
@@ -129,13 +128,6 @@ public class ProdcutOrderDTO {
 		this.msg = msg;
 	}
 
-	public String getStus() {
-		return stus;
-	}
-
-	public void setStus(String stus) {
-		this.stus = stus;
-	}
 
 	public int getTotal_cnt() {
 		return total_cnt;
@@ -162,16 +154,17 @@ public class ProdcutOrderDTO {
 	}
 	
 	//
-
 	@Override
 	public String toString() {
 		return "ProdcutOrderDTO [order_num=" + order_num + ", m_id=" + m_id + ", order_price=" + order_price
 				+ ", cp_dis=" + cp_dis + ", cp_no=" + cp_no + ", pt_minus=" + pt_minus + ", d_fee=" + d_fee
 				+ ", total_price=" + total_price + ", pt_plus=" + pt_plus + ", rec_name=" + rec_name + ", rec_addr="
-				+ rec_addr + ", rec_tel=" + rec_tel + ", msg=" + msg + ", stus=" + stus + ", total_cnt=" + total_cnt
-				+ ", order_date=" + order_date + ", p_id=" + p_id + "]";
+				+ rec_addr + ", rec_tel=" + rec_tel + ", msg=" + msg + ", total_cnt=" + total_cnt + ", order_date="
+				+ order_date + ", p_id=" + p_id + "]";
 	}
-
+	
+	
+	
 	
     
     

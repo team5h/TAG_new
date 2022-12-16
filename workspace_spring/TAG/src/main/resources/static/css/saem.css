@@ -12,18 +12,55 @@
     font-style: normal;
 }
 
+@font-face {
+     font-family: 'S-CoreDream-3Light';
+     src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-3Light.woff') format('woff');
+     font-weight: normal;
+     font-style: normal;
+}
+
+@font-face {
+    font-family: 'NEXON Lv1 Gothic OTF';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/NEXON Lv1 Gothic OTF.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
 * {
 	font-family: 'Noto Sans KR', sans-serif;
 }
 
+html {
+	height: 100%;
+	min-height: 100%;
+}
+
 body{
 	font-size:14px;
+	height: 100%;
+	display: flex; 
+	flex-direction: column;
+	min-height: 100vh;
+}
+
+.float{
+  height: auto;
+  min-height: 100%;
+  padding-bottom: 100px;
+}
+
+.float::after{
+    clear:both;
+    display:block;
+    content: '';
 }
 
 p {
 	margin:5px 0 5px 0;
 }
 
+.spinner-border {
+	color:lightgreen;
+}
 
 select {
 	width: 400px;
@@ -149,6 +186,7 @@ input:-internal-autofill-selected {
 }
 
 /* toggle */
+
 /* 슬라이더 외부를 감싸는 라벨에 대한 스타일 */
 .switch {
   position: relative;
@@ -156,6 +194,7 @@ input:-internal-autofill-selected {
   width: 35px;
   height: 20px;
 }
+
 
 /* HTML 기본 체크박스 숨기기 */
 .switch input {
@@ -172,7 +211,7 @@ input:-internal-autofill-selected {
   left: 0;
   right: 0;
   bottom: 0;
-  border: 1px solid #000000;
+  border: 1px solid lightgreen;
   background-color: white;
   -webkit-transition: .4s;
   transition: .4s;
@@ -186,13 +225,13 @@ input:-internal-autofill-selected {
   left: 3px;
   bottom: 3px;
   background-color: white;
-  border: 1px solid #000000;
+  border: 1px solid lightgreen;
   -webkit-transition: .4s;
   transition: .4s;
 }
 
 input:checked + .slider {
-  background-color: black;
+  background-color: lightgreen;
 }
 
 input:focus + .slider {
@@ -239,10 +278,36 @@ input:checked + .slider:before {
 .saem_title {
 	font-family: 'GmarketSansMedium';
 	font-weight: 700;
+	padding: 10px 0 50px 0;
 }
-/*
-.saem_a:hover {
-	border-bottom:2px solid #cdf336;
-	transition : none;
+
+textarea:focus {
+  outline: none;
+}  
+
+.side_liT {
+	font-weight: bold;
+    font-family: 'GmarketSansMedium';
+    font-size: 14px;
+    padding-bottom: 10px;
 }
-*/
+
+.fontG {
+	 font-family: 'GmarketSansMedium';
+	 color:black;
+}
+
+.fontS {
+	font-family: 'S-CoreDream-3Light';
+	color:black;
+	font-weight: 300;
+}
+
+.info_popup {
+	background-color: white;
+    border: 2px solid lightgreen;
+    font-size: 11px;
+    width: 350px;
+    padding: 5px 5px 5px 5px;
+    height: 50px;
+}

@@ -1,5 +1,8 @@
 package kr.co.itwill.memberSeller;
 
+import java.util.Collections;
+import java.util.List;
+
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -15,8 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import kr.co.itwill.memberGeneral.MemberGeneralDTO;
-
+import kr.co.itwill.Answer.AnswerDTO;
 
 @Controller
 public class MemberSellerCont {
@@ -71,7 +73,7 @@ public class MemberSellerCont {
 			// 로그인 성공
 			// 로그인 되면 세션값 저장
 			session.setAttribute("mem_grade", mem_grade);
-
+			session.setAttribute("s_p_id", id);
 			
 			Cookie cookie=null;
 			if(saveId!=null) {
@@ -164,10 +166,157 @@ public class MemberSellerCont {
 		
 		return "memberGeneral/alert";
 		
-	}//joinGeneralProc() end
+	}//joinSellerProc() end
 	
 	
+	@RequestMapping("/mypageS")
+	public ModelAndView mypageSeller(HttpSession session) {
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("/memberSeller/mypageS");
+		
+		String p_id=(String)session.getAttribute("s_p_id");	
+		
+		mav.addObject("totorder_cnt", memberSellerDao.totorder_cnt(p_id));
+		mav.addObject("delCom_cnt", memberSellerDao.delCom_cnt(p_id));
+		mav.addObject("qnaN_cnt", memberSellerDao.qnaN_cnt(p_id));
+		
+		mav.addObject("recently_order", memberSellerDao.recently_order(p_id));
+		mav.addObject("recently_qna", memberSellerDao.recently_qna(p_id));
+		
+		return mav;
+	}//end
 	
+	@RequestMapping("/mypageS/qna")
+	public ModelAndView mypageQnA(HttpSession session, HttpServletRequest req) {
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("/memberSeller/qna_n");
+		
+		String p_id=(String)session.getAttribute("s_p_id");
+		
+		//페이징
+		int totalRowCount = memberSellerDao.qnaN_cnt(p_id); // 총 개수
+		
+		//페이징설정 
+		int numPerPage = 5;
+		int pagePerBlock = 10;
+		
+		String pageNum = req.getParameter("pageNum");	// 현재 페이지값 받아오기
+		if (pageNum == null) {
+			pageNum = "1";
+		}//if end
+		
+		int currentPage = Integer.parseInt(pageNum);			// 현재 페이지
+		int startRow 	= (currentPage-1) * numPerPage + 1;		// 한 페이지 글 목록에서 시작하는 행
+		int endRow		= currentPage * numPerPage; 			// 한 페이지 글 목록에서 끝나는 행
+		
+		// 페이지 수 
+		double totcnt = (double)totalRowCount/numPerPage;		// 전체 페이지 수 (전체글개수 / 5개)
+		int totalPage = (int)Math.ceil(totcnt);					// Math.ceil : 소수점 올림
+		
+		double d_page = (double)currentPage/pagePerBlock;		// 현재 페이지 넘버 / 전체 페이지 수
+		int Pages = (int)Math.ceil(d_page) -1;					// 페이지 목록을 하나로 묶음? (1-10 목록은 1, 11-20 목록은 2)
+		int startPage = Pages*pagePerBlock +1;					// 페이지 목록(ex 1~10번페이지 / 11~20번 페이지)에서 시작하는 페이지 넘버 (10개씩이면 1,11,21···.)
+		int endPage = startPage + pagePerBlock -1;			    // 페이지 목록에서 마지막 페이지 넘버 (10개씩이면 10,20,30···.)
+		
+		List list = null;
+        if (totalRowCount > 0) {
+        	list = memberSellerDao.qnalist(startRow, endRow, p_id);
+        } else {
+            list = Collections.emptyList(); // 안 넣어도 상관 없음
+        } // if end
+        
+        mav.addObject("total", totalRowCount);
+        mav.addObject("qnalist",list);
+        mav.addObject("pageNum", currentPage);
+
+        mav.addObject("count", totalRowCount);
+        mav.addObject("totalPage", totalPage);
+        mav.addObject("startPage", startPage);
+        mav.addObject("endPage", endPage);
+		
+		//mav.addObject("qnalist", memberSellerDao.qnalist(p_id));
+		return mav;
+	}//end
 	
+	@ResponseBody
+	@RequestMapping(value = "/mypageS/answerIns", method = RequestMethod.POST)
+	public int answerIns(@ModelAttribute AnswerDTO dto, HttpSession session) {
 	
+		String p_id=(String)session.getAttribute("s_p_id");	
+		dto.setP_id(p_id);
+		
+		memberSellerDao.a_stusUpdate(dto.getQ_no());
+		
+		
+		return memberSellerDao.answerInsert(dto);
+	}//end
+	
+	@ResponseBody
+	@RequestMapping(value = "/mypageS/answerOne", method = RequestMethod.GET)
+	public String answerOne(@RequestParam int a_no) {
+		return memberSellerDao.answerOne(a_no);
+	}//end
+	
+	@RequestMapping("/mypageS/answer")
+	public ModelAndView mypageANSWER(HttpSession session,HttpServletRequest req) {
+		
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("/memberSeller/qna_y");
+		
+		String p_id=(String)session.getAttribute("s_p_id");	
+		//String p_id = "privatecurve"; 
+		
+		//페이징
+		int totalRowCount = memberSellerDao.qnaY_cnt(p_id); // 총 개수
+		
+		//페이징설정 
+		int numPerPage = 5;
+		int pagePerBlock = 10;
+		
+		String pageNum = req.getParameter("pageNum");	// 현재 페이지값 받아오기
+		if (pageNum == null) {
+			pageNum = "1";
+		}//if end
+		
+		int currentPage = Integer.parseInt(pageNum);			// 현재 페이지
+		int startRow 	= (currentPage-1) * numPerPage + 1;		// 한 페이지 글 목록에서 시작하는 행
+		int endRow		= currentPage * numPerPage; 			// 한 페이지 글 목록에서 끝나는 행
+		
+		// 페이지 수 
+		double totcnt = (double)totalRowCount/numPerPage;		// 전체 페이지 수 (전체글개수 / 5개)
+		int totalPage = (int)Math.ceil(totcnt);					// Math.ceil : 소수점 올림
+		
+		double d_page = (double)currentPage/pagePerBlock;		// 현재 페이지 넘버 / 전체 페이지 수
+		int Pages = (int)Math.ceil(d_page) -1;					// 페이지 목록을 하나로 묶음? (1-10 목록은 1, 11-20 목록은 2)
+		int startPage = Pages*pagePerBlock +1;					// 페이지 목록(ex 1~10번페이지 / 11~20번 페이지)에서 시작하는 페이지 넘버 (10개씩이면 1,11,21···.)
+		int endPage = startPage + pagePerBlock -1;			    // 페이지 목록에서 마지막 페이지 넘버 (10개씩이면 10,20,30···.)
+		
+		List list = null;
+        if (totalRowCount > 0) {
+        	list = memberSellerDao.answerlist(startRow, endRow, p_id);
+        } else {
+            list = Collections.emptyList(); // 안 넣어도 상관 없음
+        } // if end
+        
+        mav.addObject("total", totalRowCount);
+        mav.addObject("answerlist",list);
+        mav.addObject("pageNum", currentPage);
+
+        mav.addObject("count", totalRowCount);
+        mav.addObject("totalPage", totalPage);
+        mav.addObject("startPage", startPage);
+        mav.addObject("endPage", endPage);
+
+		//mav.addObject("answerlist",memberSellerDao.answerlist(p_id));
+		
+		return mav;
+	}//end
+	
+	@ResponseBody
+	@RequestMapping (value = "/mypageS/answerUpdate", method = RequestMethod.POST)
+	public int answerUpdate(@ModelAttribute AnswerDTO dto) {
+		//System.out.println(dto.getContent());
+		//System.out.println(dto.getA_no());
+		return memberSellerDao.answerupdate(dto);
+	}//end
 }//class end 

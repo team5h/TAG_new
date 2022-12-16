@@ -10,7 +10,6 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<meta name="author" content="Untree.co">
-	<link rel="shortcut icon" href="favicon.png">
 
 	<meta name="description" content="" />
 	<meta name="keywords" content="" />
@@ -149,19 +148,56 @@
 						</a>
 	
 						<!-- 프로필 -->
-						<a href="/mypage/mypageG" class="user-profile">
-							<svg width="23" height="23" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-							<g clip-path="url(#clip0_429_9074)">
-							<path d="M3.99988 18C3.99988 15.7908 5.79074 14 7.99988 14H15.9999C18.209 14 19.9999 15.7908 19.9999 18V18C19.9999 19.1045 19.1044 20 17.9999 20H5.99988C4.89531 20 3.99988 19.1045 3.99988 18V18Z" stroke="#292929" stroke-width="1.5" stroke-linejoin="round"/>
-							<circle cx="11.9999" cy="6.99997" r="3" stroke="#292929" stroke-width="1.5"/>
-							</g>
-							<defs>
-							<clipPath id="clip0_429_9074">
-							<rect width="24" height="24" fill="white"/>
-							</clipPath>
-							</defs>
-							</svg>
-						</a>
+						<c:choose>
+							<c:when test="${mem_grade == 'B'}">		<!-- 일반 회원 -->
+								<a href="/mypage/mypageG" class="user-profile">
+									<svg width="23" height="23" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+									<g clip-path="url(#clip0_429_9074)">
+									<path d="M3.99988 18C3.99988 15.7908 5.79074 14 7.99988 14H15.9999C18.209 14 19.9999 15.7908 19.9999 18V18C19.9999 19.1045 19.1044 20 17.9999 20H5.99988C4.89531 20 3.99988 19.1045 3.99988 18V18Z" stroke="#292929" stroke-width="1.5" stroke-linejoin="round"/>
+									<circle cx="11.9999" cy="6.99997" r="3" stroke="#292929" stroke-width="1.5"/>
+									</g>
+									<defs>
+									<clipPath id="clip0_429_9074">
+									<rect width="24" height="24" fill="white"/>
+									</clipPath>
+									</defs>
+									</svg>
+								</a>
+							</c:when>
+							
+							<c:when test="${mem_grade == 'S'}">		<!-- 판매자 회원 -->
+								<a href="/mypageS" class="user-profile">
+									<svg width="23" height="23" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+									<g clip-path="url(#clip0_429_9074)">
+									<path d="M3.99988 18C3.99988 15.7908 5.79074 14 7.99988 14H15.9999C18.209 14 19.9999 15.7908 19.9999 18V18C19.9999 19.1045 19.1044 20 17.9999 20H5.99988C4.89531 20 3.99988 19.1045 3.99988 18V18Z" stroke="#292929" stroke-width="1.5" stroke-linejoin="round"/>
+									<circle cx="11.9999" cy="6.99997" r="3" stroke="#292929" stroke-width="1.5"/>
+									</g>
+									<defs>
+									<clipPath id="clip0_429_9074">
+									<rect width="24" height="24" fill="white"/>
+									</clipPath>
+									</defs>
+									</svg>
+								</a>
+							</c:when>
+							
+							<c:when test="${mem_grade == null}">	<!-- 로그인으로 이동 -->
+								<a href="/loginForm" class="user-profile">
+									<svg width="23" height="23" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+									<g clip-path="url(#clip0_429_9074)">
+									<path d="M3.99988 18C3.99988 15.7908 5.79074 14 7.99988 14H15.9999C18.209 14 19.9999 15.7908 19.9999 18V18C19.9999 19.1045 19.1044 20 17.9999 20H5.99988C4.89531 20 3.99988 19.1045 3.99988 18V18Z" stroke="#292929" stroke-width="1.5" stroke-linejoin="round"/>
+									<circle cx="11.9999" cy="6.99997" r="3" stroke="#292929" stroke-width="1.5"/>
+									</g>
+									<defs>
+									<clipPath id="clip0_429_9074">
+									<rect width="24" height="24" fill="white"/>
+									</clipPath>
+									</defs>
+									</svg>
+								</a>
+							</c:when>
+						</c:choose>
+					
 						
 						
 						
@@ -202,7 +238,7 @@
 						
 						<!-- 로그인 하지 않은 상태 -->
 						<c:if test="${mem_grade == null}">
-							<a href="#" onclick="location.href='loginForm'">
+							<a href="/loginForm">
 							<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 							<g clip-path="url(#clip0_429_9095)">
 							<path d="M9 4.00024H19V18.0002C19 19.1048 18.1046 20.0002 17 20.0002H9" stroke="#292929" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -219,7 +255,7 @@
 						
 						<!-- 로그인 한 상태 -->
 						<c:if test="${mem_grade != null}">
-							<a href="#" onclick="location.href='logout.do'">
+							<a href="/logout.do">
 							<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 							<g clip-path="url(#clip0_429_9096)">
 							<path d="M15 4.00098H5V18.001C5 19.1055 5.89543 20.001 7 20.001H15" stroke="#292929" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -250,7 +286,7 @@
 	
 	<!-- <div class="owl-carousel owl-single"> -->
   		<!-- <div class="untree_co-section" style="padding-top:55px;"> -->
-    		<div class="container" style="padding-top:100px;">
+    		<div class="container" style="padding-top:100px; max-width: 1350px;">
       		<!-- 	<div class="align-items-center"> -->
         	
         	

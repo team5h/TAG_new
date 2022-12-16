@@ -9,8 +9,8 @@
       
       <!-- 푸터 -->
 
-	<div class="site-footer">
-		<div class="container">
+	<div class="site-footer" style="clear: both;">
+		<div class="container" >
 				<!-- <div class="col-12 copyright"> -->
 					<p>CONTACT US 
 						<br>+84 02.6255.8002</p> 

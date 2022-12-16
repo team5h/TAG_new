@@ -147,6 +147,15 @@ public class ProductCont {
 	}//search() end	
 	
 
+	@RequestMapping("/product")
+	//@RequestMapping("/product/{pro_no}")
+	public ModelAndView productdetail() {
+		ModelAndView mav = new ModelAndView();
+		
+		mav.setViewName("/product/detail");
+		
+		return mav;
+	}// end
 	
 	
 }//class end

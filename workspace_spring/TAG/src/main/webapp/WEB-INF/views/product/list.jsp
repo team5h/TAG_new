@@ -260,7 +260,7 @@ function categoryList() {
 		    <!-- 상품검색 시작 -->
 			<span id= "product_search">
 				<form method="post" action="search">
-					<a href="detail/${row.pro_no}">${row.pro_name}</a>
+					<a href="/product/${row.pro_no}">${row.pro_name}</a>
 					<input type="text" id="pro_name" name="pro_name" value="${pro_name}">
 					<input type="submit" id="btnSubmit" value="검색" style="display:none;">
 						<label for="btnSubmit">
@@ -352,7 +352,7 @@ function categoryList() {
 							<div>
 							<!-- varStatus 상태용 변수 -->
 							<c:forEach items="${list}" var="row" varStatus="vs">
-							<a href="detail/${row.pro_no}">
+							<a href="/product/${row.pro_no}">
 
 							<td id="product_box">
 							
@@ -392,7 +392,7 @@ function categoryList() {
 										</span>
 										
 										<div class="product-image">
-											<a href="detail/${row.pro_no}"><img src="/storage/${row.postername}" width="300px" height="400px"></a>
+											<a href="/product/${row.pro_no}"><img src="/storage/${row.postername}" width="300px" height="400px"></a>
 										</div>
 									</div>
 									</c:when>
@@ -410,14 +410,14 @@ function categoryList() {
 								
 								<!-- 상품명 -->
 								<div id="product_name">
-									<a href="detail/${row.pro_no}">${row.pro_name}</a>
+									<a href="/product/${row.pro_no}">${row.pro_name}</a>
 								</div>
 					
 								<!-- 가격 -->
 								<div id="product_price">
 								￦ <fmt:formatNumber value="${row.price}" pattern="#,###" />
 									<span style="float: right;">
-									<a href="detail/${row.pro_no}">
+									<a href="/product/${row.pro_no}">
 										<svg id="arrow-icon" width="45px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 26.56 15.5">
 										<defs>
 										<style>.cls-1{fill:none;stroke:#231f20;stroke-miterlimit:10;stroke-width:1px;}</style>
