@@ -15,7 +15,7 @@
 </p>
 
 <div>
-<form name="form1" method="post" action="insert" >
+<form name="form1" method="post" action="/notice/insert" >
 <table class="table">
 <tr>
 	<td>제목</td>

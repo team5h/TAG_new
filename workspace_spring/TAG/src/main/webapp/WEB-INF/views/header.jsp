@@ -1,7 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c"   uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt"   uri="http://java.sun.com/jsp/jstl/fmt"%>
-<%@ taglib prefix="fn"   uri="http://java.sun.com/jsp/jstl/functions"%>
 
 <! doctype html>
 <html lang="ko">
@@ -10,10 +8,12 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<meta name="author" content="Untree.co">
-	<link rel="shortcut icon" href="favicon.png">
-
 	<meta name="description" content="" />
 	<meta name="keywords" content="" />
+	
+	<!--  오류악마
+	<link rel="shortcut icon" href="favicon.png">  
+	-->
 
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -89,7 +89,7 @@
 					<ul class="js-clone-nav pl-0 d-none d-lg-inline-block site-menu">
 						<li class="active"><a href="home">HOME</a></li>
 						<li class="has-children">
-							<a href="shop.html">공연</a>
+							<a href="/concert">공연</a>
 							<ul class="dropdown">
 								<li><a href="#">전체보기</a></li>
 								<li><a href="#">랭킹</a></li>
@@ -124,7 +124,7 @@
 						</li>
 
 						
-						<li><a href="/notice/list">공지사항</a></li>
+						<li><a href="shop.html">공지사항</a></li>
 						
 					</ul>
 
@@ -149,7 +149,7 @@
 						</a>
 	
 						<!-- 프로필 -->
-						<a href="/mypage/mypageG" class="user-profile">
+						<a href="#" class="user-profile">
 							<svg width="23" height="23" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 							<g clip-path="url(#clip0_429_9074)">
 							<path d="M3.99988 18C3.99988 15.7908 5.79074 14 7.99988 14H15.9999C18.209 14 19.9999 15.7908 19.9999 18V18C19.9999 19.1045 19.1044 20 17.9999 20H5.99988C4.89531 20 3.99988 19.1045 3.99988 18V18Z" stroke="#292929" stroke-width="1.5" stroke-linejoin="round"/>
@@ -183,7 +183,7 @@
 						
 						
 						<!-- 장바구니 아이콘 -->
-						<a href="cart.html" class="cart">
+						<a href="/cart" class="cart">
 							<!-- <span class="item-in-cart">2</span> --><!-- 장바구니 담으면 뜨는 숫자 -->
 							<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 							<g clip-path="url(#clip0_429_9132)">

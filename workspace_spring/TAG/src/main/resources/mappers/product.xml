@@ -15,10 +15,10 @@
 			SELECT @RNO := @RNO + 1 as r, CC.*
 			FROM (
 				SELECT pro_no, category, c_no, p_id, pro_name, stock, color, size, price, postername, status, regdate
-				FROM   product
+				FROM   product , (SELECT @RNO := 0) BB 
 				WHERE  status = 'Y'
 				ORDER BY regdate DESC
-			) CC, (SELECT @RNO := 0) BB 
+			) CC
 		ORDER BY pro_no DESC
 		) AA 
 		WHERE r >= #{start} AND r <= #{end}
@@ -59,21 +59,47 @@
 		WHERE r >= #{start} AND r <= #{end}
 		]]>
 	</select> 
-
+	
+	
 	
 <!-- [ 공연목록 ] -->	
 	<select id="concert" resultType="kr.co.itwill.concert.ConcertDTO" >
-		SELECT c_no, title, date, start_time, end_time, open_tck, close_tck, genre, j_id, com_name, dlv_date, edit
+		SELECT c_no, title, date, start_time, end_time, open_eb, close_eb, open_tck, close_tck, genre, j_id, 						
+			   com_name, dlv_date, likecnt, postername, watch_age, price, edit
 		FROM   concert
 	</select> 
 	
 	
-<!-- [ 상품목록 - Concert ] -->	
-	<select id="listConert" resultType="kr.co.itwill.product.ProductDTO">
-		SELECT category, c_no, p_id, pro_name, stock, color, size, price, postername, status, regdate
-		FROM product
-		WHERE c_no = ${c_no}
-	</select> 	
+	
+<!-- [ 상품목록 - 콘서트별 ] -->
+	<select id="concertTotal" resultType="int" parameterType="String">
+		<![CDATA[
+		SELECT COUNT(*) 
+		FROM product 
+		WHERE status = 'Y' && c_no = #{c_no}
+		]]>
+	</select> 
+	
+	
+	
+<!-- [ 상품목록 - 콘서트별 리스트 + 페이징 ] -->	
+	<select id="concertList" resultType="kr.co.itwill.product.ProductDTO" parameterType="java.util.Map">	
+		<![CDATA[
+		SELECT AA.*
+		FROM(
+			SELECT @RNO := @RNO + 1 as r, CC.*
+			FROM (
+				SELECT pro_no, category, c_no, p_id, pro_name, stock, color, size, price, postername, status, regdate
+				FROM   product
+				WHERE  status = 'Y' && c_no = #{c_no}
+				ORDER BY regdate DESC
+			) CC, (SELECT @RNO := 0) BB 
+		ORDER BY pro_no DESC
+		) AA 
+		WHERE r >= #{start} AND r <= #{end}
+		]]>
+	</select> 
+
 	
 	
 <!-- [ 상품검색 ] -->	
@@ -96,6 +122,18 @@
 	
 	
 	
+	
+<!-- 티켓 결제시 관련 상품 보여주기 (다슬언니)-->
+	<select id="viewProduct" resultType="kr.co.itwill.product.ProductDTO" parameterType="Int">	
+		SELECT *
+		FROM (
+			SELECT @ROWNUM := @ROWNUM + 1 as rnum, pro_no, category, c_no, p_id, pro_name, stock, color, size, price, postername, status, regdate
+			FROM   product, (SELECT @ROWNUM :=0) A
+			WHERE  status = 'Y' AND c_no = #{c_no}
+			ORDER BY regdate DESC
+			) RESULT
+		WHERE rnum between 1 and 3;
+	</select> 	
 
 	
 	

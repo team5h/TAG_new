@@ -1,7 +1,6 @@
 package kr.co.itwill.concert;
 
 public class ConcertDTO {
-
 	private int c_no;
 	private String title;
 	private String date;
@@ -15,6 +14,10 @@ public class ConcertDTO {
 	private String j_id;
 	private String com_name;
 	private String dlv_date;
+	private int likecnt;
+	private String postername;
+	private String watch_age;
+	private int price;
 	private String edit;
 	
 	
@@ -151,6 +154,46 @@ public class ConcertDTO {
 	}
 
 
+	public int getLikecnt() {
+		return likecnt;
+	}
+
+
+	public void setLikecnt(int likecnt) {
+		this.likecnt = likecnt;
+	}
+
+
+	public String getPostername() {
+		return postername;
+	}
+
+
+	public void setPostername(String postername) {
+		this.postername = postername;
+	}
+
+
+	public String getWatch_age() {
+		return watch_age;
+	}
+
+
+	public void setWatch_age(String watch_age) {
+		this.watch_age = watch_age;
+	}
+
+
+	public int getPrice() {
+		return price;
+	}
+
+
+	public void setPrice(int price) {
+		this.price = price;
+	}
+
+
 	public String getEdit() {
 		return edit;
 	}
@@ -166,11 +209,10 @@ public class ConcertDTO {
 		return "ConcertDTO [c_no=" + c_no + ", title=" + title + ", date=" + date + ", start_time=" + start_time
 				+ ", end_time=" + end_time + ", open_eb=" + open_eb + ", close_eb=" + close_eb + ", open_tck="
 				+ open_tck + ", close_tck=" + close_tck + ", genre=" + genre + ", j_id=" + j_id + ", com_name="
-				+ com_name + ", dlv_date=" + dlv_date + ", edit=" + edit + "]";
+				+ com_name + ", dlv_date=" + dlv_date + ", likecnt=" + likecnt + ", postername=" + postername
+				+ ", watch_age=" + watch_age + ", price=" + price + ", edit=" + edit + "]";
 	}
-	
-	
+
 	
 	
 }//class end
-

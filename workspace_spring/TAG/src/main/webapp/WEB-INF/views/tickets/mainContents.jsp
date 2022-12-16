@@ -249,11 +249,11 @@
 	</tr>
 	<tr>
 		<td><label for="rec_name">이름</label></td>
-		<td><input type="text" id="rec_name" value="정다슬"></td>
+		<td><input type="text" id="rec_name" name="rec_name" value="정다슬"></td>
 	</tr>
 	<tr>
 		<td><label for="rec_tel">연락처</label></td>
-		<td><input type="text" id="rec_tel" value="010-1234-1234"></td>
+		<td><input type="text" id="rec_tel" name="rec_tel" value="010-1234-1234"></td>
 	</tr>
 	<!-- 
 	<tr>
@@ -263,11 +263,11 @@
 	 -->
 	<tr>
 		<td><label for="rec_addr">받는주소</label></td>
-		<td><input type="text" id="rec_addr" value="서울시 관악구"></td>
+		<td><input type="text" id="rec_addr" name="rec_addr" value="서울시 관악구"></td>
 	</tr>
 	<tr>
 		<td><label for="msg">배송메세지</label></td>
-		<td><input type="text" id="msg" value="배송 전 연락바랍니다."></td>
+		<td><input type="text" id="msg" name="msg" value="배송 전 연락바랍니다."></td>
 	</tr>				
 	</table>
 </div><!-- ticketDeliveryjsp end -->

@@ -55,19 +55,20 @@ public class MemberGeneralCont {
 		String id=dto.getM_id();
 		String pw=dto.getM_pw();	
 		
+		// mapper에서 담아온 select문을 DAO에 담아준 후 그 값을 변수에 담아준다. --> B등급 나옴.
+		//memberGeneralDao.select에는 아이디와 비번이 일치하면 회원등급이 나오는 sql문을 작성했다.
+		String mem_grade = memberGeneralDao.select(dto);
+		
+		
 		// 아이디 저장 가져오기 <input type="checkbox" ${empty cookie.id.value ? "":"checked" } name="saveId" value="SAVE">아이디 저장</label>
 		String saveId = req.getParameter("saveId");
 		//System.out.println(saveId); 
 		// -> 아이디저장 체크를 하면 "SAVE" 값이 들어오고, 체크하지않으면 null값이 들어온다.
 		
 		
-		
 		// DB에 저장돼있는 아이디와 비밀번호 비교해야함.
 		dto.setM_id(id);
 		dto.setM_pw(pw);
-		
-		// mapper에서 담아온 select문을 DAO에 담아준 후 그 값을 변수에 담아준다. --> B등급 나옴.
-		String mem_grade = memberGeneralDao.select(dto);
 		
 		
 		// mapper -> DAO 에 담아온 sql문 값이 있는지? 없는지? 
