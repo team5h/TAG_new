@@ -3,10 +3,8 @@ package kr.co.itwill.tickets;
 public class TicketDetailDTO {
 	private int tdno;
 	private String tck_num;
-	private int cseat;
+	private String cseat;
 	private int price;
-	private String discount;
-	private int f_pay;
 	
 	public TicketDetailDTO() {}
 
@@ -26,11 +24,11 @@ public class TicketDetailDTO {
 		this.tck_num = tck_num;
 	}
 
-	public int getCseat() {
+	public String getCseat() {
 		return cseat;
 	}
 
-	public void setCseat(int cseat) {
+	public void setCseat(String cseat) {
 		this.cseat = cseat;
 	}
 
@@ -42,28 +40,10 @@ public class TicketDetailDTO {
 		this.price = price;
 	}
 
-	public String getDiscount() {
-		return discount;
-	}
-
-	public void setDiscount(String discount) {
-		this.discount = discount;
-	}
-
-	public int getF_pay() {
-		return f_pay;
-	}
-
-	public void setF_pay(int f_pay) {
-		this.f_pay = f_pay;
-	}
-
 	@Override
 	public String toString() {
-		return "TicketDetailDTO [tdno=" + tdno + ", tck_num=" + tck_num + ", cseat=" + cseat + ", price=" + price
-				+ ", discount=" + discount + ", f_pay=" + f_pay + "]";
+		return "TicketDetailDTO [tdno=" + tdno + ", tck_num=" + tck_num + ", cseat=" + cseat + ", price=" + price + "]";
 	}
-	
 	
 
 }//class end

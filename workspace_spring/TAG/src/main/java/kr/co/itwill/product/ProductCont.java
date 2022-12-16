@@ -12,10 +12,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import kr.co.itwill.utility.PagingDTO;
-
-
-
 @Controller
 public class ProductCont {
 
@@ -31,13 +27,12 @@ public class ProductCont {
 //  [상품리스트 - 전체보기] 시작 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  //
 	
 
-	// /list가 들어오면
     @RequestMapping("/list.do")
-    // ModelAndView로 객체를 만든다. list라는 이름의 메서드를 만든다. 
     public ModelAndView list(HttpServletRequest req) {
     	
     	//System.out.println(req.getParameter("category"));
     	String category = req.getParameter("category");// A C M P
+    	
     	
         ModelAndView mav = new ModelAndView();
         mav.setViewName("product/list");
@@ -104,12 +99,64 @@ public class ProductCont {
  // [상품리스트 - 콘서트 카테고리] - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - //
 	
  	@RequestMapping("/listConcert")
- 	public ModelAndView listConcert() {
+ 	public ModelAndView concertList(HttpServletRequest req) {
+ 		//System.out.println("잘 도착 했다.");
+ 		
+ 		String c_no = req.getParameter("c_no");
+ 		//System.out.println(c_no);
+ 		
  		ModelAndView mav = new ModelAndView();
  		mav.setViewName("product/listConcert");
  		
+ 		int totalRowCount = productDao.concertTotal(c_no);
+ 		//System.out.println(totalRowCount);
+ 		
+ 		
+        // 페이징 파트
+        int numPerPage = 9; // 한 페이지당 레코드(글) 갯수
+        int pagePerBlock = 5; // 페이지 리스트 (블럭당 페이지 수)
+
+        // 현재 페이지 번호 (문자형)
+        String pageNum = req.getParameter("pageNum");
+        //System.out.println(pageNum);
+        
+        if (pageNum == null) {
+            pageNum = "1";
+        } // if end
+
+        int currentPage = Integer.parseInt(pageNum);
+        int startRow = (currentPage - 1) * numPerPage + 1;
+        int endRow = currentPage * numPerPage;
+        double totcnt = (double) totalRowCount / numPerPage;
+        int totalPage = (int) Math.ceil(totcnt);
+        double d_page = (double) currentPage / pagePerBlock;
+        int Pages = (int)Math.ceil(d_page)-1;
+        int startPage = Pages * pagePerBlock+1;
+        int endPage = startPage + pagePerBlock-1;
+        
+        List list = null;
+        if (totalRowCount > 0) {
+        	list = productDao.concertList(startRow, endRow, c_no);//1, 5, M
+        } else {
+            list = Collections.emptyList(); // 안 넣어도 상관 없음
+        } // if end
+    	
+ 	    mav.addObject("total", totalRowCount);
+ 	    mav.addObject("c_no", c_no);
+ 	    mav.addObject("categoryAll", productDao.categoryAll());
+        mav.addObject("list", list);
+        mav.addObject("pageNum", currentPage);
+
+        mav.addObject("count", totalRowCount);
+        mav.addObject("totalPage", totalPage);
+        mav.addObject("startPage", startPage);
+        mav.addObject("endPage", endPage);
+ 	
+ 		
+ 		mav.addObject("categoryAll", productDao.categoryAll());
  		mav.addObject("concertlist", productDao.concert());
  		
+ 		//System.out.println("컨트롤러 확인" + productDao.concert());
  		//System.out.println(productDao.list());
  		
  		return mav;
@@ -129,7 +176,6 @@ public class ProductCont {
 		
 		return mav;
 	}//search() end
-	
 
 	
 
@@ -156,6 +202,7 @@ public class ProductCont {
 		
 		return mav;
 	}// end
+
 	
 	
 }//class end

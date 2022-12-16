@@ -2,6 +2,7 @@
 
 <%@ include file="../header.jsp" %>
 
+
 <script>
 	function notice_update(){
 		document.form1.action="/notice/update";

@@ -14,6 +14,8 @@ public class TicketOrderDTO {
 	private String rec_tel;
 	private String msg;
 	private String stus;
+	private String dis_descrip;
+	
 
 	public TicketOrderDTO() {}
 
@@ -121,13 +123,21 @@ public class TicketOrderDTO {
 		this.stus = stus;
 	}
 
+	public String getDis_descrip() {
+		return dis_descrip;
+	}
+
+	public void setDis_descrip(String dis_descrip) {
+		this.dis_descrip = dis_descrip;
+	}
+
 	@Override
 	public String toString() {
-		return "TicketsDTO [tck_num=" + tck_num + ", m_id=" + m_id + ", c_no=" + c_no + ", cnt=" + cnt
+		return "TicketOrderDTO [tck_num=" + tck_num + ", m_id=" + m_id + ", c_no=" + c_no + ", cnt=" + cnt
 				+ ", order_price=" + order_price + ", dis_price=" + dis_price + ", d_fee=" + d_fee + ", total_price="
 				+ total_price + ", rec_name=" + rec_name + ", rec_addr=" + rec_addr + ", rec_tel=" + rec_tel + ", msg="
-				+ msg + ", stus=" + stus + "]";
+				+ msg + ", stus=" + stus + ", dis_descrip=" + dis_descrip + "]";
 	}
-	
+
 	
 }//class end

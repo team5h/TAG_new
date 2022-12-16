@@ -46,6 +46,10 @@ a{color: black; !important;}
 
 /* 상품명 위에 공연명 */
 #concert_name {
+/*   margin-top: 20px;
+  border-top: 1px solid black;
+  padding-top: 15px;
+  padding-bottom: 8px; */
   font-size: 13px;
   margin-bottom: 3px;
   font-weight: 300;
@@ -253,7 +257,7 @@ function categoryList() {
 		         	<a href="#" onclick=""><option value="popular">인기순</option></a>
 		         	<option value="like">좋아요순</option>
 		  	 	</select>
-		    </span> 최신순/인기순/좋아요순 카테고리 끝
+		    </span> 최신순/인기순/좋아요순 카테고리 끝 
 -->		    
 		    
 		    
@@ -290,7 +294,7 @@ function categoryList() {
 				<div class="h3_title">
 				    <!-- <a href="#" onclick="location.href='/list.do'"><h3 style="text-decoration: underline;">All</h3></a> -->
 				    <a href="#" onclick="location.href='/list.do'"><h3>All</h3></a>
-			        <a href="#" onclick="location.href='/listConcert'"><h3>Concert</h3></a>
+			        <a href="/listConcert"><h3>Concert</h3></a>
 		        </div><!-- h3_title 끝 -->
 		        
 		        
@@ -504,7 +508,7 @@ function categoryList() {
 					
 								<!-- endPage보다 총 페이지 수가 크다면 다음 pages로 이동 가능하다 -->
 								<c:if test="${endPage < pageCount}">
-									<a href="/list.do?pageNum=${startPage+10}">[다음]</a>
+									<a href="/list.do?pageNum=${startPage+5}">[다음]</a>
 								</c:if>
 							
 							</c:if>
