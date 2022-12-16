@@ -4,9 +4,23 @@
 <mapper namespace="coupon">
 
 	<select id="list" resultType="kr.co.itwill.coupon.CouponDTO">
-		SELECT cp_no, m_id, coupon, issue_date, exp_date, c_no, cp_stus
+		SELECT cp_no, m_id, coupon,
+		issue_date, exp_date, c_no, cp_stus
 		FROM coupon_detail
-		ORDER BY cp_no DESC
+		ORDER BY cp_no
+		DESC
 	</select>
-	
+
+
+	<!-- 티켓결제 티켓 주문서 insert -->
+	<insert id="add" parameterType="kr.co.itwill.coupon.CouponDTO">
+		INSERT INTO coupon_detail(m_id, coupon, issue_date, exp_date, c_no)
+		VALUES (
+		 #{m_id}
+		,#{coupon}
+		,#{issue_date}
+		,#{exp_date}
+		,#{c_no}
+		)
+	</insert>
 </mapper>

@@ -30,11 +30,58 @@ ul{list-style:none; padding-left:0px;}
 #ticketSalejsp input {border: none; background: transparent;}
 #ticketSalejsp input:focus {outline: none;}
 
-
-/* div class=bfixed  
-.bfixed {position: absolute; right: 0; top: 0; width: 400px; border: 3px; background:beige;}
-.bfixed p{margin-top: 5px; margin-bottom: 5px;} 
+/*
+.couponArea {display:inline-block; background-image: url("/images/Bc.png"); height:304px; width:910px; margin:50px 0 100px 0; padding:0; text-align:left; }
 */
+.couponArea .concertName{text-align:right; font-size:24px; margin: 20px 20px; font-weight: bold;}
+.couponArea .dateOfIssue{text-align:right; font-size:14px; margin: 170px 20px 0; font-weight: bold;}
+.couponArea .EXP{text-align:right; font-size:14px; margin: 0 20px; font-weight: bold;}
+
+
+.sectionA{
+  display:inline-block;
+  height:300px; 
+  width:600px; 
+  margin:0; 
+  padding:0;
+  border:solid;
+  background-color : white;
+  border-radius: 10px 30px 10px 50px;
+  text-align: center;
+}
+
+.sectionB{
+  display:inline-block; 
+  height:300px; 
+  width:300px; 
+  margin:0 0 0 -5px; 
+  padding:0;
+  border:solid;
+  background-color : #33FF33;
+  border-radius: 30px 10px 50px;
+}
+
+.mytableA{
+	margin:auto;
+	height:250px;
+	width: 400px;
+}
+
+.mytableB{
+	margin:auto;
+	height:250px;
+	width: 220px;
+}
+
+.mytableA tr, .mytableB tr{
+	border-bottom:solid ;
+}
+
+.clearfix::after {
+  content: "";
+  display: block;
+  clear: both;
+}
 
 /* modal test  */
 /* The Modal (background) */

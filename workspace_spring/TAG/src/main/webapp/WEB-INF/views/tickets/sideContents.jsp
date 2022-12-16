@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <div id="seatAddFormjsp">
-	<table style="border:1px solid black; height:538px; width: 362px;">
+	<table style="border:1px solid black; height:520px; width: 347px;">
 	<tr>
 		<td>
 			공연장 미니맵<br>
@@ -29,7 +29,7 @@
 		</td>
 	</tr>
 	<tr>
-		<td>선택한 좌석 | <input style="display:inline-block; width:250px; text-align:right; color:red;" type="text" id="seatCnt" value="총 0석 선택하였습니다"></td>
+		<td>선택한 좌석 | <input style="display:inline-block; width:210px; text-align:right; color:red;" type="text" id="seatCnt" value="총 0석 선택하였습니다"></td>
 	</tr>
 	<tr>
 		<td>
@@ -55,21 +55,17 @@
 </div>
 
 <div id="ticketAddFormjsp">
-	<input type="hidden" name="tck_num" value="티켓일련번호TCK-001"><!-- 예매번호 -->
+	<input type="hidden" name="tck_num" value="00000000-00000000"><!-- 예매번호 -->
 	<input type="hidden" name="m_id" value="kangsun"><!-- 회원ID -->
-	<input type="hidden" name="c_no" value="1"><!-- 공연일련번호 -->
-	<input type="hidden" name="cnt" value="3"><!-- 수량 -->
-	<input type="hidden" name="order_price" value="88000"><!-- 주문금액 -->
-	<input type="hidden" name="dis_price" value="33000"><!-- 할인금액 -->
-	<input type="hidden" name="d_fee" value="0"><!-- 배송비 -->
-	<input type="hidden" name="total_price" value="55000"><!-- 최종결제금액 -->
-	<input type="hidden" name="discount" value="J"><!-- 할인코드 -->
-	<input type="hidden" name="rec_name" value="정다슬"><!-- 받는사람 -->
-	<input type="hidden" name="rec_addr" value="서울시"><!-- 받는주소 -->
-	<input type="hidden" name="rec_tel" value="010-1234-5678"><!-- 핸드폰번호 -->
-	<input type="hidden" name="msg" value="배송 잘 부탁드립니다."><!-- 배송메세지 -->
+	<input type="hidden" name="c_no" value="3"><!-- 공연일련번호 -->
+	<input type="hidden" name="cnt" id="cnt" value="0"><!-- 수량 -->
+	<input type="hidden" name="order_price" id="order_price" value="0"><!-- 주문금액 -->
+	<input type="hidden" name="dis_price" id="dis_price" value="0"><!-- 할인금액 -->
+	<input type="hidden" name="d_fee" id="d_fee" value="0"><!-- 배송비 -->
+	<input type="hidden" name="total_price" id="total_price" value="0"><!-- 최종결제금액 -->
+	<input type="hidden" name="dis_descrip" id="dis_descrip" value="할인내용"><!-- 할인내용 -->
 	<input type="hidden" name="stus" value="결제완료"><!-- 결과상태 -->
-	<table style="border:1px solid black; height:538px; width: 362px;">
+	<table style="border:1px solid black; height:520px; width: 347px;">
 	<tr>
 		<td style="width:30%; background:lightgrey;">
 			공연포스터 이미지
@@ -124,7 +120,7 @@
 	<tr>
 		<td style="background:lightgrey;">할인금액</td>
 		<td><input type="text" id="discountPrice"></td><!-- 할인금액 -->
-	</tr>	
+	</tr>
 	<tr>
 		<td style="background:lightgrey;">총 결제금액</td>
 		<td><input type="text" id="totalPrice"></td><!-- 최종결제금액 -->
