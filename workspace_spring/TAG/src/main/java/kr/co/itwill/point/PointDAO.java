@@ -16,7 +16,11 @@ public class PointDAO {
 	@Autowired
 	SqlSession sqlSession;
 	
-	public List<PointDTO> list(){
+	public int ptCount(String s_m_id) {
+		return sqlSession.selectOne("point.ptCount", s_m_id);
+	}//tckCount() end
+	
+	public List<PointDTO> list(String s_m_id){
 		return sqlSession.selectList("point.list");
 	}//list() end
 	

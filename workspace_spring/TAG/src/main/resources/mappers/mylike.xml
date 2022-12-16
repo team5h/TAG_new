@@ -11,17 +11,19 @@
 	</select>
 	
 	<select id="list_c" resultType="java.util.Map" parameterType="String">
-		select lno, m_id, like_cd, like_li, CC.edit
-		from member_like MM join concert CC
-		on MM.like_li=CC.c_no
-		where m_id=#{s_m_id} and like_cd='C'
+		SELECT lno, m_id, like_cd, like_li, CC.postername
+		FROM member_like MM join concert CC
+		ON MM.like_li=CC.c_no
+		WHERE m_id=#{s_m_id} AND like_cd='C'
 	</select>
 	
 	<select id="list_p" resultType="java.util.Map" parameterType="String">
-		select lno, m_id, like_cd, like_li, PP.edit
-		from member_like MM join product PP
-		on MM.like_li=PP.pro_no
-		where m_id=#{s_m_id} and like_cd='P'
+		SELECT lno, m_id, like_cd, like_li, PP.postername
+		FROM member_like MM join product PP
+		ON MM.like_li=PP.pro_no
+		WHERE m_id=#{s_m_id} AND like_cd='P'
 	</select>
+	
+	
 	
 </mapper>

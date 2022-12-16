@@ -1,5 +1,7 @@
 package kr.co.itwill.memberGeneral;
 
+import java.util.List;
+
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -15,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import kr.co.itwill.myticket.MyticketDTO;
 
 @Controller
 public class MemberGeneralCont {
@@ -175,8 +179,36 @@ public class MemberGeneralCont {
 	}//joinGeneralProc() end
 	
 	
+	@RequestMapping("mypage/memberupdateG")
+	public ModelAndView memberupdateG(HttpSession session) {
+		String s_m_id=(String)session.getAttribute("s_m_id");		
+		ModelAndView mav=new ModelAndView();
+		mav.setViewName("mypage/updateG");
+		
+		MemberGeneralDTO dto=memberGeneralDao.memberupdateG(s_m_id);
+		//System.out.println(dto);
+		mav.addObject("dto", dto);
+		return mav;
+	}//memberupdateG() end
 	
 	
+	@RequestMapping(value = "/memberupdateGproc", method = RequestMethod.POST)
+	public String memberupdateGproc( MemberGeneralDTO dto, 
+							 HttpServletRequest req, 
+							 HttpServletResponse resp)throws Exception{
+		
+		int cnt = memberGeneralDao.memberupdateGproc(dto);
+		if(cnt == 1) { //수정 성공
+		   req.setAttribute("msg", "수정이 완료되었습니다.");
+		   req.setAttribute("url", "/home");
+		}else{
+			req.setAttribute("msg", "수정 실패했습니다.");
+		}//if end
+		
+		
+		return "memberGeneral/alert";
+		
+	}//memberupdateGproc() end
 	
 	
 	

@@ -8,3 +8,5 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 
+<jsp:useBean id="dao" class="kr.co.itwill.memberGeneral.MemberGeneralDAO"/>
+<jsp:useBean id="dto" class="kr.co.itwill.memberGeneral.MemberGeneralDTO"/>

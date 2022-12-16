@@ -1,8 +1,12 @@
 package kr.co.itwill.memberGeneral;
 
+import java.util.List;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+
+import kr.co.itwill.myticket.MyticketDTO;
 
 @Repository
 public class MemberGeneralDAO {
@@ -38,6 +42,18 @@ public class MemberGeneralDAO {
 		return sqlSession.insert("memberGeneral.joinG", dto);
 	}//joinG end
 	
+	
+	// 회원정보수정
+	public MemberGeneralDTO memberupdateG(String m_id){
+		//System.out.println(m_id);
+		return sqlSession.selectOne("memberGeneral.memberupdateG", m_id);
+	}//memberupdateG end
+	
+	
+	// 회원정보수정 mappers
+	public int memberupdateGproc(MemberGeneralDTO dto){
+		return sqlSession.update("memberGeneral.memberupdateGproc", dto);
+	}//memberupdateGproc end 
 	
 	
 }//class end

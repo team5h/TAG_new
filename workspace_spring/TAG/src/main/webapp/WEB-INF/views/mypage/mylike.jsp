@@ -15,7 +15,7 @@
 	.rightcontent {
 		float: right;
 		width: 80%;
-		height: 100%;
+		height: 100%;		
 	}
 	.leftcontent, .rightcontent, .box {
 		border: 1px solid black;
@@ -63,6 +63,26 @@
 	.likeItem p {
 		font-size: 14px;
 	}
+	
+	.mylike_concert {
+		/*border: solid 1px blue;*/
+		height: 50%;
+	}
+	
+	.mylike_concert p {
+		border-bottom: solid 3px black;
+	}
+	
+	.mylike_product {
+		margin-top: 1%;
+		/*border: solid 1px blue;*/
+		height: 50%;
+	}
+
+	.mylike_product p {
+		border-bottom: solid 3px black;
+	}
+	
 </style>
 
 <div class="title">
@@ -71,29 +91,30 @@
 <div></div>
 
 <div class="leftcontent" style="float:left; width:15%; margin-right:5%; height:100%;">
-	<div><b>kangsun</b> 님</div>
-	<div></div>
-	<div><a href="/mypage/updateG">회원 정보 수정</a></div>
-	<div></div>
+	<div><b>${s_m_id}</b> 님</div>
+	<div><a href="/mypage/memberupdateG">회원 정보 수정</a></div>
 	<div class="box">
-		<div ><b>MY티켓</b>
+		<div><b>MY티켓</b>
 			<div><a href="/mypage/myticket">- 예매 확인 / 취소</a></div>	
 		</div>
-		<div><b>MY상품</b></div>
+		<div><b>MY상품</b>
 			<div><a href="/mypage/myproduct">- 상품 구매내역</a></div>	
-			<div><a href="#">- 나의 문의내역</a></div>	
-		<div><b>좋아요</b></div>
-		<div><a href="/mypage/mylike">- 관심 공연 / 관심 상품</a></div>
-		<div><b>MY쿠폰 / MY포인트</b></div>
-		<div><a href="/couponDetail/detail">- 보유 쿠폰</a></div>
-		<div><a href="/pointDetail/detail">- 보유 포인트</a></div>
+			<div><a href="#">- 나의 문의내역</a></div>
+		</div>
+		<div><b>좋아요</b>
+			<div><a href="/mypage/mylike">- 관심 공연 / 관심 상품</a></div>
+		</div>
+		<div><b>MY쿠폰 / MY포인트</b>
+			<div><a href="/couponDetail/detail">- 보유 쿠폰</a></div>
+			<div><a href="/pointDetail/detail">- 보유 포인트</a></div>
+		</div>
 	</div>
 
 </div><!-- leftcontent end -->
 
 
 
-
+<!-- 
 	<div class="myLike">
 		<div class="likeItem">
 		상품개수 : ${fn:length(list)}
@@ -114,26 +135,34 @@
 			</table>
 		</div>
 	</div>
-
+ -->
 
 <div class="rightcontent" style="">
 	<div class=mylike_concert>
 		<table border="1">
 		<tr>
-			
-			<c:forEach var="row" items="${imglist_c}" varStatus="vs">
-			
+			<p style="text-align: center;">공연 좋아요</p>
+			<c:forEach var="row" items="${list_c}" varStatus="vs">
 				<td>
 					<c:choose>
-						<c:when test="${row != '-'}">
-							<img src="/storage/${row}" width="100px">
+						<c:when test="${row.m_id == null}">
+							관심 공연이 없습니다
+						</c:when>
+						<c:when test="${row.postername != null}">
+							<img src="/storage/${row.postername}" width="100px">
 						</c:when>
 						<c:otherwise>
 							등록된 사진 없음!!<br>
 						</c:otherwise>
 					</c:choose>
+					<div id="concert_name">
+						<a href="#">PREP LIVE IN SEOUL</a>
+					</div>
 				</td>
-
+				<!-- 테이블 한줄에 3칸씩 -->
+				<c:if test="${vs.count mod 3==0 }">
+					<tr></tr>
+				</c:if>
 			</c:forEach>
 		</tr>
 		</table>
@@ -142,20 +171,28 @@
 	<div class=mylike_product>
 		<table border="1">
 		<tr>
+			<p style="text-align: center;">상품 좋아요</p>
 			<!-- varStatus="상태용 변수" -->
 			<c:forEach var="row" items="${list_p}" varStatus="vs">
 				<td>
 					<c:choose>
-						<c:when test="${row.edit != null}">
-							<img src="/storage/${row.edit}" width="100px">
+						<c:when test="${row.postername != null}">
+							<img src="/storage/${row.postername}" width="100px">
 						</c:when>
+						
 						<c:otherwise>
 							등록된 사진 없음!!<br>
 						</c:otherwise>
 					</c:choose>
+					<div id="concert_name">
+						<a href="#">PREP LIVE IN SEOUL</a>
+					</div>
+					<div id="product_name">
+						<a href="detail/${row.pro_no}">${row.pro_name}</a>
+					</div>
 				</td>
-				<!-- 테이블 한줄에 5칸씩 -->
-				<c:if test="${vs.count mod 5==0 }">
+				<!-- 테이블 한줄에 3칸씩 -->
+				<c:if test="${vs.count mod 3==0 }">
 					<tr></tr>
 				</c:if>
 			</c:forEach>

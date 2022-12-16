@@ -138,24 +138,42 @@
 						</a>
 	
 						<!-- 프로필 -->
-						<a href="/mypage/mypageG" class="user-profile">
-							<svg width="23" height="23" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-							<g clip-path="url(#clip0_429_9074)">
-							<path d="M3.99988 18C3.99988 15.7908 5.79074 14 7.99988 14H15.9999C18.209 14 19.9999 15.7908 19.9999 18V18C19.9999 19.1045 19.1044 20 17.9999 20H5.99988C4.89531 20 3.99988 19.1045 3.99988 18V18Z" stroke="#292929" stroke-width="1.5" stroke-linejoin="round"/>
-							<circle cx="11.9999" cy="6.99997" r="3" stroke="#292929" stroke-width="1.5"/>
-							</g>
-							<defs>
-							<clipPath id="clip0_429_9074">
-							<rect width="24" height="24" fill="white"/>
-							</clipPath>
-							</defs>
-							</svg>
-						</a>
+						<c:if test="${mem_grade == null}">	<!-- 로그인 하지 않았다면 -->
+							<a href="#" onclick="location.href='/loginForm'">
+								<svg width="23" height="23" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+								<g clip-path="url(#clip0_429_9074)">
+								<path d="M3.99988 18C3.99988 15.7908 5.79074 14 7.99988 14H15.9999C18.209 14 19.9999 15.7908 19.9999 18V18C19.9999 19.1045 19.1044 20 17.9999 20H5.99988C4.89531 20 3.99988 19.1045 3.99988 18V18Z" stroke="#292929" stroke-width="1.5" stroke-linejoin="round"/>
+								<circle cx="11.9999" cy="6.99997" r="3" stroke="#292929" stroke-width="1.5"/>
+								</g>
+								<defs>
+								<clipPath id="clip0_429_9074">
+								<rect width="24" height="24" fill="white"/>
+								</clipPath>
+								</defs>
+								</svg>
+							</a>
+						</c:if>
+						
+						<c:if test="${mem_grade != null}">	<!-- 로그인 했다면 -->
+							<a href="/mypage/mypageG" class="user-profile">
+								<svg width="23" height="23" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+								<g clip-path="url(#clip0_429_9074)">
+								<path d="M3.99988 18C3.99988 15.7908 5.79074 14 7.99988 14H15.9999C18.209 14 19.9999 15.7908 19.9999 18V18C19.9999 19.1045 19.1044 20 17.9999 20H5.99988C4.89531 20 3.99988 19.1045 3.99988 18V18Z" stroke="#292929" stroke-width="1.5" stroke-linejoin="round"/>
+								<circle cx="11.9999" cy="6.99997" r="3" stroke="#292929" stroke-width="1.5"/>
+								</g>
+								<defs>
+								<clipPath id="clip0_429_9074">
+								<rect width="24" height="24" fill="white"/>
+								</clipPath>
+								</defs>
+								</svg>
+							</a>
+						</c:if>
 						
 						
 						
 						<!-- 좋아요 하트 -->
-						<a href="cart.html" class="like">
+						<a href="/mypage/mylike" class="like">
 							<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 							<g clip-path="url(#clip0_429_9297)">
 							<path d="M19.0711 13.1421L13.4142 18.799C12.6332 19.58 11.3668 19.58 10.5858 18.799L4.92894 13.1421C2.97632 11.1895 2.97632 8.02369 4.92894 6.07106C6.88157 4.11844 10.0474 4.11844 12 6.07106C13.9526 4.11844 17.1185 4.11844 19.0711 6.07106C21.0237 8.02369 21.0237 11.1895 19.0711 13.1421Z" stroke="#292929" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>

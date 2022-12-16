@@ -3,10 +3,24 @@
 
 <mapper namespace="myproduct">
 
-	<select id="list" resultType="kr.co.itwill.myproduct.MyproductDTO">
-		SELECT order_num, m_id, order_price, cp_dis, cp_no, pt_minus, d_fee, total_price, pt_plus, rec_name, rec_addr, rec_tel, msg, stus
+	<select id="list" resultType="kr.co.itwill.myproduct.MyproductDTO" parameterType="String">
+		SELECT order_num, m_id, order_price, cp_dis, cp_no, pt_minus, d_fee, total_price, pt_plus, rec_name, rec_addr, rec_tel, msg
 		FROM product_order
+		WHERE m_id=#{s_m_id}
 		ORDER BY order_num DESC
+	</select>
+	
+	<select id="orderCount" resultType="int" parameterType="String">
+		SELECT count(*)
+		FROM product_order
+		WHERE m_id=#{s_m_id}
+	</select>
+	
+	<select id="detail" resultType="java.util.Map" parameterType="String">
+		SELECT substring_index(DT.order_num,'-',1) AS orderDate, DT.order_num, PP.pro_name, PP.color, PP.size, DT.detail_cnt, DT.org_price, DT.discount, DT.total_price, DT.stus
+		FROM order_detail DT JOIN product PP
+		ON DT.pro_no=PP.pro_no
+		WHERE order_num=#{order_num}
 	</select>
 	
 </mapper>

@@ -330,7 +330,7 @@ function categoryList() {
 			<!-- list_content 시작 -->
 			<div class="list_content">
 			
-			<div class="count-category" style="paading-bottom: 30px;">
+			<div class="count-category" style="padding-bottom: 30px;">
 			<sapn id= "product_count">
 			All (${total})
 			</span>

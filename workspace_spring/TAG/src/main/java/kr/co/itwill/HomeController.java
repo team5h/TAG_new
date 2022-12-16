@@ -20,8 +20,5 @@ public class HomeController {
 		return "index";
 	}//home() end
 
-	@RequestMapping("mypage/updateG")
-	public String updateG() {
-		return "mypage/updateG";
-	}//updateG() end
+	
 }//class end

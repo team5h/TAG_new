@@ -3,9 +3,16 @@
 
 <mapper namespace="point">
 
-	<select id="list" resultType="kr.co.itwill.point.PointDTO">
+	<select id="ptCount" resultType="int" parameterType="String">
+		SELECT count(*)
+		FROM point_detail
+		WHERE m_id=#{s_m_id}
+	</select>
+
+	<select id="list" resultType="kr.co.itwill.point.PointDTO" parameterType="String">
 		SELECT pt_no, m_id, detail, pt_plus, pt_minus, pt_total, order_num, cng_date
 		FROM point_detail
+		WHERE m_id=#{s_m_id}
 		ORDER BY pt_no DESC
 	</select>
 	
